@@ -1,5 +1,6 @@
 package com.es.diecines.dto;
 
+//prueba
 public class PeliculaDTO {
     private Long id;
     private String title;
