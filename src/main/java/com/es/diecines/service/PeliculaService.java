@@ -4,6 +4,7 @@ import com.es.diecines.controller.PeliculaController;
 import com.es.diecines.dto.PeliculaDTO;
 import com.es.diecines.model.Pelicula;
 import com.es.diecines.repository.PeliculaRepository;
+import com.es.diecines.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,19 +35,7 @@ public class PeliculaService {
             return null;
         } else {
             // 3 Convertir p (Pelicula) a PeliculaDTO
-            PeliculaDTO pDto = new PeliculaDTO();
-            pDto.setDirector(p.getDirector());
-            pDto.setId(p.getId());
-            pDto.setRating(p.getRating());
-            pDto.setSynopsis(p.getSynopsis());
-            pDto.setTime(p.getTime());
-            pDto.setScreenshot(p.getScreenshot());
-            pDto.setPosterImage(p.getPosterImage());
-            pDto.setTrailer(p.getTrailer());
-            pDto.setTitle(p.getTitle());
-            return pDto;
+            return Mapper.entityToDTO(p);
         }
-
-
     }
 }

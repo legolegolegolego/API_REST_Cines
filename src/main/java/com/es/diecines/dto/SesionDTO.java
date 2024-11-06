@@ -8,6 +8,7 @@ public class SesionDTO {
     private Long roomId;
     private LocalDate date;
 
+    public SesionDTO(){}
     public SesionDTO(Long id, Long movieId, Long roomId, LocalDate date) {
         this.id = id;
         this.movieId = movieId;
