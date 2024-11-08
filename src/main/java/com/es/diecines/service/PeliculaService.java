@@ -1,12 +1,14 @@
 package com.es.diecines.service;
 
-import com.es.diecines.controller.PeliculaController;
 import com.es.diecines.dto.PeliculaDTO;
+import com.es.diecines.error.BaseDeDatosException;
 import com.es.diecines.model.Pelicula;
 import com.es.diecines.repository.PeliculaRepository;
 import com.es.diecines.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.es.diecines.exceptions.NotFoundException;
+
 
 @Service
 public class PeliculaService {
@@ -22,17 +24,21 @@ public class PeliculaService {
         try {
             idL = Long.parseLong(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
+            throw new NumberFormatException("El formato del id es incorrecto");
         }
 
         // 2 obtenemos la Pelicula
-        Pelicula p = peliculaRepository
-                .findById(idL)
-                .orElse(null);
+        Pelicula p = null;
+        try {
+            p = peliculaRepository
+                    .findById(idL)
+                    .orElse(null);
+        } catch (Exception e) {
+            throw new BaseDeDatosException(idL + " erróneo");
+        }
 
         if(p == null) {
-            return null;
+            throw new NotFoundException("id "+id+" no encontrado");
         } else {
             // 3 Convertir p (Pelicula) a PeliculaDTO
             return Mapper.entityToDTO(p);
